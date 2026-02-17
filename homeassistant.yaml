@@ -15,7 +15,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: ""
   nfs:
-    server: 192.168.0.1
+    server: 192.168.0.55
     path: /home/yk/downloads/k8s
 ---
 apiVersion: v1
