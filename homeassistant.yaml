@@ -125,3 +125,4 @@ spec:
       protocol: TCP
       port: 8123
       targetPort: http
+      nodePort: 31123
