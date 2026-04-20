@@ -1,37 +1,3 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: homeassistant
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: homeassistant-config-pv
-spec:
-  capacity:
-    storage: 5Gi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: ""
-  nfs:
-    server: 192.168.0.55
-    path: /home/yk/downloads/k8s
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: homeassistant-config
-  namespace: homeassistant
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: ""
-  volumeName: homeassistant-config-pv
-  resources:
-    requests:
-      storage: 5Gi
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -105,21 +71,3 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: homeassistant-config
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: homeassistant
-  namespace: homeassistant
-spec:
-  selector:
-    app: homeassistant
-  type: LoadBalancer
-  loadBalancerSourceRanges:
-    - 192.168.0.0/24
-  ports:
-    - name: http
-      protocol: TCP
-      port: 8123
-      targetPort: http
-      nodePort: 31123
